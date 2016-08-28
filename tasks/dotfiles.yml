@@ -8,7 +8,7 @@
   when: rcm_installed.stat.exists == false
 
 - name: Check out dotfiles repo
-  accept_hostkey: True
+  accept_hostkey: yes
   git: repo=git@github.com:dgliwa/dotfiles.git dest={{ dotfiles_dir }}
 
 - name: Install submodules
