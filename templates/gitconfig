@@ -3,3 +3,13 @@
 [user]
   name = {{ name }}
   email = {{ email }}
+[core]
+  autocrlf = input
+[push]
+  default = simple
+[alias]
+  dc = diff --cached
+  lol = log --oneline
+  amend = commit --amend --no-edit
+  co = checkout
+  st = status
