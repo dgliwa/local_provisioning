@@ -10,7 +10,7 @@
 - name: Check out dotfiles repo
   git:
     repo: git@github.com:dgliwa/dotfiles.git
-    dest: {{ dotfiles_dir }}
+    dest: "{{ dotfiles_dir }}"
     accept_hostkey: yes
 
 - name: Install submodules
