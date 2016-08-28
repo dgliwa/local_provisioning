@@ -1,6 +1,6 @@
 ---
-- name: Check for installed casks
-  shell: rbenv versions | grep {{ item }}
+- name: Check for installed rubies
+  shell: rbenv versions --bare | grep {{ item }}
   register: installed_rubies
   with_items: rbenv_versions
   ignore_errors: true

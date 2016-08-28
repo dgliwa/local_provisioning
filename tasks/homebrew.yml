@@ -12,12 +12,20 @@
   with_items: brews
 
 - name: Check homebrew-cask is installed
-  stat: path=/usr/local/bin/brew-cask.rb
+  stat: path=/usr/local/Library/Taps/caskroom/homebrew-versions
   register: brew_cask_installed
+
+- name: Check homebrew-cask-versions is installed
+  stat: path=/usr/local/Library/Taps/caskroom/homebrew-versions
+  register: brew_cask_versions_installed
 
 - name: Install homebrew-cask
   shell: brew tap caskroom/cask
   when: brew_cask_installed.stat.exists == false
+
+- name: Install homebrew-cask-versions
+  shell: brew tap caskroom/versions
+  when: brew_cask_versions_installed.stat.exists == false
 
 - name: Check for installed casks
   shell: brew cask list --appdir={{ application_dir }} | grep {{ item }}
@@ -25,7 +33,18 @@
   with_items: applications
   ignore_errors: true
 
+- name: Check for installed cask versions
+  shell: brew cask list --appdir={{ application_dir }} | grep {{ item }}
+  register: installed_application_versions
+  with_items: other_apps
+  ignore_errors: true
+
 - name: Install apps with brew-cask
   shell: brew cask install {{ item }} --appdir={{ application_dir }}
   with_items: applications
   when: "item not in installed_applications.results|map(attribute='stdout')"
+
+- name: Install other apps with brew-cask
+  shell: brew cask install {{ item }} --appdir={{ application_dir }}
+  with_items: other_apps
+  when: "item not in installed_application_versions.results|map(attribute='stdout')"

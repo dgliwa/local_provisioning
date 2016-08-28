@@ -30,6 +30,8 @@
       - the-unarchiver
       - virtualbox
       - vlc
+    other_apps:
+      - intellij-idea-ce
     application_dir: /Applications
     brews:
       - ack
@@ -124,7 +126,11 @@
     zsh_path: /bin/zsh
 
   tasks:
-    - include: tasks/homebrew.yml tags=homebrew
-    - include: tasks/zsh.yml tags=zsh
-    - include: tasks/dotfiles.yml tags=dotfiles
-    - include: tasks/rbenv.yml tags=rbenv
+    - include: tasks/homebrew.yml
+      tags: [homebrew]
+    - include: tasks/zsh.yml
+      tags: [zsh]
+    - include: tasks/dotfiles.yml
+      tags: [dotfiles]
+    - include: tasks/rbenv.yml
+      tags: [rbenv]
