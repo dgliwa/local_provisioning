@@ -13,9 +13,6 @@
     dest: "{{ dotfiles_dir }}"
     accept_hostkey: yes
 
-- name: Install submodules
-  shell: cd {{ dotfiles_dir }} && git submodule init && git submodule update
-
 - name: Apply dotfiles
   shell: rcup -f -d {{ dotfiles_dir }}
 
