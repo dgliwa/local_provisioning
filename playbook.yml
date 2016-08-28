@@ -35,13 +35,11 @@
       - ack
       - ansible
       - ant
-      - apple-gcc42
       - argtable
       - autoconf
       - boost
       - cmake
       - cowsay
-      - cpp-ethereum
       - cryptopp
       - ctags
       - curl
@@ -49,7 +47,6 @@
       - docker
       - docker-machine
       - eris
-      - ethereum
       - fortune
       - freetype
       - gdbm
@@ -58,10 +55,10 @@
       - gmp
       - gnutls
       - go
-      - gradle
+      #- gradle
       - imagemagick
-      - instantclient-basic
-      - instantclient-sdk
+      #- instantclient-basic
+      #- instantclient-sdk
       - ios-sim
       - irssi
       - jpeg
@@ -78,10 +75,10 @@
       - libtiff
       - libtool
       - libyaml
-      - llvm37
+      #- llvm37
       - lua
-      - luarocks
-      - maven
+      #- luarocks
+      #- maven
       - memcached
       - mercurial
       - mergepbx
@@ -96,7 +93,6 @@
       - packer
       - pcre
       - phantomjs
-      - phantomjs198
       - pixman
       - pkg-config
       - python
@@ -107,7 +103,7 @@
       - readline
       - reattach-to-user-namespace
       - ruby-build
-      - scala
+      #- scala
       - sdl
       - snappy
       - sqlite
@@ -115,7 +111,7 @@
       - the_silver_searcher
       - tig
       - tmux
-      - tomcat
+      #- tomcat
       - tree
       - vault
       - wget
