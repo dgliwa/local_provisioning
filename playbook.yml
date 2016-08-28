@@ -2,49 +2,133 @@
 - hosts: all
 
   vars:
+    rbenv_versions:
+      - 2.2.4
     applications:
       - alfred
-      - boxer
-      - cord
+      - atom
+      - caffeine
+      - chromium
+      - clipmenu
+      - docker
       - firefox
+      - flux
       - google-chrome
-      - gpgtools
-      - handbrake
+      - google-drive
       - hipchat
-      - kdiff3
-      - libreoffice
-      - limechat
-      - phpstorm
+      - intellij-idea
+      - iterm2
+      - kindle
+      - macvim
       - mou
-      - parallels
+      - postgres
+      - postman
       - robomongo
-      - sequel-pro
-      - sonos
-      - spotify
+      - rubymine
+      - slack
+      - sublime-text
       - the-unarchiver
-      - transmit
-      - tunnelblick
-      - vagrant
       - virtualbox
       - vlc
     application_dir: /Applications
     brews:
       - ack
-      - chromedriver
+      - ansible
+      - ant
+      - apple-gcc42
+      - argtable
+      - autoconf
+      - boost
+      - cmake
+      - cowsay
+      - cpp-ethereum
+      - cryptopp
+      - ctags
+      - curl
+      - d-bus
       - docker
-      - hub
-      - ios-webkit-debug-proxy
-      - rsync
-      - zsh
-    caskroom_dir: /usr/local/caskroom
-    dotfiles_dir: /Users/craig/Code/dotfiles
-    email: EMAIL_HERE
-    github_username: craigmarvelley
-    home_dir: /Users/craig
-    name: Craig Marvelley
-    zsh_path: /usr/local/bin/zsh
+      - docker-machine
+      - eris
+      - ethereum
+      - fortune
+      - freetype
+      - gdbm
+      - gettext
+      - glib
+      - gmp
+      - gnutls
+      - go
+      - gradle
+      - imagemagick
+      - instantclient-basic
+      - instantclient-sdk
+      - ios-sim
+      - irssi
+      - jpeg
+      - jsoncpp
+      - leiningen
+      - leveldb
+      - libevent
+      - libffi
+      - libjson-rpc-cpp
+      - libmemcached
+      - libmicrohttpd
+      - libpng
+      - libtasn1
+      - libtiff
+      - libtool
+      - libyaml
+      - llvm37
+      - lua
+      - luarocks
+      - maven
+      - memcached
+      - mercurial
+      - mergepbx
+      - miniupnpc
+      - mongodb
+      - mysql
+      - ncftp
+      - nettle
+      - nmap
+      - node
+      - openssl
+      - packer
+      - pcre
+      - phantomjs
+      - phantomjs198
+      - pixman
+      - pkg-config
+      - python
+      - python3
+      - qemu
+      - qt5
+      - rbenv
+      - readline
+      - reattach-to-user-namespace
+      - ruby-build
+      - scala
+      - sdl
+      - snappy
+      - sqlite
+      - terraform
+      - the_silver_searcher
+      - tig
+      - tmux
+      - tomcat
+      - tree
+      - vault
+      - wget
+      - xz
+    dotfiles_dir: /Users/derekgliwa/dotfiles
+    email: dgliwa@thoughtworks.com
+    github_username: dgliwa
+    home_dir: /Users/derekgliwa
+    name: Derek Gliwa
+    zsh_path: /bin/zsh
 
   tasks:
     - include: tasks/homebrew.yml tags=homebrew
     - include: tasks/zsh.yml tags=zsh
     - include: tasks/dotfiles.yml tags=dotfiles
+    - include: tasks/rbenv.yml tags=rbenv

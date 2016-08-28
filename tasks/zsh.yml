@@ -5,11 +5,11 @@
 
 - name: Enable zsh in /etc/shells
   shell: sudo /bin/sh -c 'grep -q "{{ zsh_path }}" /etc/shells || echo "{{ zsh_path }}" >> /etc/shells'
-  when: current_shell.stdout != '/usr/local/bin/zsh'
+  when: current_shell.stdout != '/bin/zsh'
 
 - name: Set zsh as default shell
   shell: chsh -s {{ zsh_path }}
-  when: current_shell.stdout != '/usr/local/bin/zsh'
+  when: current_shell.stdout != '/bin/zsh'
 
 - name: Check oh-my-zsh is installed
   stat: path={{ home_dir}}/.oh-my-zsh
