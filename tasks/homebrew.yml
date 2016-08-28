@@ -29,6 +29,3 @@
   shell: brew cask install {{ item }} --appdir={{ application_dir }}
   with_items: applications
   when: "item not in installed_applications.results|map(attribute='stdout')"
-
-- name: Modify alfred scope to include caskroom
-  shell: brew cask alfred link --appdir={{ application_dir }}
