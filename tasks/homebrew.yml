@@ -4,7 +4,7 @@
   register: brew_installed
 
 - name: Install Homebrew
-  shell: ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+  shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   when: brew_installed.stat.exists == false
 
 - name: Install Homebrew libraries
