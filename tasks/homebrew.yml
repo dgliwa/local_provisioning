@@ -1,4 +1,3 @@
----
 - name: Check Homebrew is installed
   stat: path=/usr/local/bin/brew
   register: brew_installed
@@ -9,7 +8,7 @@
 
 - name: Install Homebrew libraries
   homebrew: name={{ item }} state=present
-  with_items: brews
+  with_items: '{{brews}}'
 
 - name: Check homebrew-cask is installed
   stat: path=/usr/local/Library/Taps/caskroom/homebrew-versions
@@ -30,21 +29,21 @@
 - name: Check for installed casks
   shell: brew cask list --appdir={{ application_dir }} | grep {{ item }}
   register: installed_applications
-  with_items: applications
+  with_items: '{{applications}}'
   ignore_errors: true
 
 - name: Check for installed cask versions
   shell: brew cask list --appdir={{ application_dir }} | grep {{ item }}
   register: installed_application_versions
-  with_items: other_apps
+  with_items: '{{other_apps}}'
   ignore_errors: true
 
 - name: Install apps with brew-cask
   shell: brew cask install {{ item }} --appdir={{ application_dir }}
-  with_items: applications
+  with_items: '{{applications}}'
   when: "item not in installed_applications.results|map(attribute='stdout')"
 
 - name: Install other apps with brew-cask
   shell: brew cask install {{ item }} --appdir={{ application_dir }}
-  with_items: other_apps
+  with_items: '{{other_apps}}'
   when: "item not in installed_application_versions.results|map(attribute='stdout')"
