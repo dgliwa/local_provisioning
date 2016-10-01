@@ -16,5 +16,8 @@
 - name: Apply dotfiles
   shell: rcup -f -d {{ dotfiles_dir }}
 
+- name: Install vim plugins
+  shell: vim +PluginInstall +qall
+
 - name: Apply local git config
   template: src=templates/gitconfig dest={{home_dir}}/.gitconfig
