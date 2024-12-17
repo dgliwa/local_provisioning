@@ -57,7 +57,8 @@
   register: github_email
   when: git_config.stat.exists == false
 
-- name: write hostname using jinja2
+- name: write git config
   ansible.builtin.template:
     src: templates/gitconfig.j2
     dest: "{{ansible_env.HOME}}/.gitconfig"
+  when: git_config.stat.exists == false
