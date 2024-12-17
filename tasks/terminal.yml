@@ -9,6 +9,10 @@
 - name: Check exports
   stat: path="{{ansible_env.HOME}}/.exports"
   register: exports
+  
+- name: Check aliases
+  stat: path="{{ansible_env.HOME}}/.aliases"
+  register: aliases
 
 - name: Backup zshrc
   ansible.builtin.shell:
@@ -24,6 +28,11 @@
   ansible.builtin.shell:
     cmd: "mv {{ansible_env.HOME}}/.exports {{ansible_env.HOME}}/.exports.bak"
   when: exports.stat.exists == True and (exports.stat.islnk == False or exports.stat.lnk_target != "{{playbook_dir}}/files/exports")
+  
+- name: Backup aliases
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.aliases {{ansible_env.HOME}}/.aliases.bak"
+  when: aliases.stat.exists == True and (aliases.stat.islnk == False or aliases.stat.lnk_target != "{{playbook_dir}}/files/aliases")
   
 - name: Link to zshrc
   ansible.builtin.file:
@@ -43,3 +52,8 @@
     dest: "{{ansible_env.HOME}}/.exports"
     state: link
 
+- name: Link to aliases
+  ansible.builtin.file:
+    src: "{{playbook_dir}}/files/aliases"
+    dest: "{{ansible_env.HOME}}/.aliases"
+    state: link

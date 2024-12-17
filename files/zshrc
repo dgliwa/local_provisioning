@@ -105,6 +105,7 @@ source $ZSH/oh-my-zsh.sh
 
 . ~/.colors
 . ~/.exports
+. ~/.aliases
 . ~/.asdf/asdf.sh
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
