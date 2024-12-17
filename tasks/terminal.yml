@@ -13,6 +13,10 @@
 - name: Check aliases
   stat: path="{{ansible_env.HOME}}/.aliases"
   register: aliases
+  
+- name: Check gitignore
+  stat: path="{{ansible_env.HOME}}/.gitignore"
+  register: gitignore
 
 - name: Backup zshrc
   ansible.builtin.shell:
@@ -33,6 +37,11 @@
   ansible.builtin.shell:
     cmd: "mv {{ansible_env.HOME}}/.aliases {{ansible_env.HOME}}/.aliases.bak"
   when: aliases.stat.exists == True and (aliases.stat.islnk == False or aliases.stat.lnk_target != "{{playbook_dir}}/files/aliases")
+  
+- name: Backup gitignore
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.gitignore {{ansible_env.HOME}}/.gitignore.bak"
+  when: gitignore.stat.exists == True and (gitignore.stat.islnk == False or gitignore.stat.lnk_target != "{{playbook_dir}}/files/gitignore")
   
 - name: Link to zshrc
   ansible.builtin.file:
@@ -56,4 +65,10 @@
   ansible.builtin.file:
     src: "{{playbook_dir}}/files/aliases"
     dest: "{{ansible_env.HOME}}/.aliases"
+    state: link
+    
+- name: Link to gitignore
+  ansible.builtin.file:
+    src: "{{playbook_dir}}/files/gitignore"
+    dest: "{{ansible_env.HOME}}/.gitignore"
     state: link

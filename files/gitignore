@@ -1,0 +1,14 @@
+!tmp/cache/.keep
+**/.DS_Store
+*.DS_Store
+*.sw[nop]
+.DS_Store
+.bundle
+.gemtags
+.tags
+db/*.sqlite3
+log/*.log
+rerun.txt
+tags
+tmp/**/*
+zeus.json
