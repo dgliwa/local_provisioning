@@ -1,0 +1,23 @@
+[alias]
+  co = checkout
+  st = status
+  ci = commit
+  pu = pull --rebase
+  ps = push
+  br = branch
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+[core]
+  editor = vim
+  autocrlf = input
+[apply]
+  whitespace = nowarn
+[web]
+  browser = open
+[user]
+  email = {{github_email.user_input}}
+  name = {{github_name.user_input}}
+[init]
+  defaultBranch = main

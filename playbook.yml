@@ -2,138 +2,54 @@
 - hosts: all
 
   vars:
-    rbenv_versions:
-      - 2.2.4
-      - 2.2.2
-    applications:
-      - alfred
-      - atom
-      - caffeine
-      - chromium
-      - clipmenu
-      - docker
-      - firefox
-      - flux
-      - google-chrome
-      - google-drive
-      - hipchat
-      - intellij-idea
-      - iterm2
-      - kindle
-      - macvim
-      - mongochef
-      - mou
-      - postgres
-      - postman
-      - robomongo
-      - rubymine
-      - screenhero
-      - slack
-      - sublime-text
-      - the-unarchiver
-      - virtualbox
-      - vlc
-    other_apps:
-      - intellij-idea-ce
-    application_dir: /Applications
     brews:
-      - ack
-      - ansible
-      - ant
-      - argtable
-      - autoconf
-      - boost
-      - cmake
-      - cowsay
-      - cryptopp
-      - ctags
-      - curl
-      - d-bus
-      - docker
-      - docker-machine
-      - eris
-      - fortune
-      - freetype
-      - gdbm
-      - gettext
-      - glib
-      - gmp
-      - gnutls
-      - go
-      #- gradle
-      - imagemagick
-      #- instantclient-basic
-      #- instantclient-sdk
-      - ios-sim
-      - irssi
-      - jpeg
-      - jsoncpp
-      - leiningen
-      - leveldb
-      - libevent
-      - libffi
-      - libjson-rpc-cpp
-      - libmemcached
-      - libmicrohttpd
-      - libpng
-      - libtasn1
-      - libtiff
-      - libtool
-      - libyaml
-      #- llvm37
-      - lua
-      #- luarocks
-      #- maven
-      - memcached
-      - mercurial
-      - mergepbx
-      - miniupnpc
-      - mongodb
-      - mysql
-      - ncftp
-      - nettle
-      - nmap
-      - node
-      - openssl
-      - packer
-      - pcre
-      - phantomjs
-      - pixman
-      - pkg-config
-      - python
-      - python3
-      - qemu
-      - qt5
-      - rbenv
-      - readline
-      - reattach-to-user-namespace
-      - ruby-build
-      #- scala
-      - sdl
-      - snappy
-      - sqlite
-      - terraform
-      - the_silver_searcher
-      - tig
-      - tmux
-      #- tomcat
-      - tree
-      - vault
-      - wget
-      - xz
-    dotfiles_dir: /Users/derekgliwa/dotfiles
-    email: dgliwa@thoughtworks.com
-    github_username: dgliwa
-    home_dir: /Users/derekgliwa
-    name: Derek Gliwa
-    zsh_path: /bin/zsh
+      - git
+      - neovim
+      - ripgrep
+      - tree-sitter
+      - vcprompt
+    casks:
+      - alfred
+      - arc
+      - discord
+      - rectangle
+      - spotify
+      - visual-studio-code
+      - wezterm
 
   tasks:
-    - include: tasks/homebrew.yml
-      tags: [homebrew]
-    - include: tasks/zsh.yml
-      tags: [zsh]
-    - include: tasks/dotfiles.yml
-      tags: [dotfiles]
-    - include: tasks/rbenv.yml
-      tags: [rbenv]
+    # - name: Install brews
+    #   ansible.builtin.include_tasks:
+    #     file: tasks/homebrew.yml
+    #     apply:
+    #       tags: [brew]
+    # - name: Configure git
+    #   ansible.builtin.include_tasks:
+    #     file: tasks/git.yml
+    #     apply:
+    #       tags: [git]
+    # - name: Install asdf
+    #   ansible.builtin.include_tasks:
+    #     file: tasks/asdf.yml
+    #     apply:
+    #       tags: [asdf]
+    # - name: Configure nvim
+    #   ansible.builtin.include_tasks:
+    #     file: tasks/nvim.yml
+    #     apply:
+    #       tags: [nvim]
+    # - name: Configure omz
+    #   ansible.builtin.include_tasks:
+    #     file: tasks/omz.yml
+    #     apply:
+    #       tags: [omz]
+    - name: Link shell configuration
+      ansible.builtin.include_tasks:
+        file: tasks/terminal.yml
+        apply:
+          tags: [terminal]
+    # - name: Install docker
+    #   ansible.builtin.include_tasks:
+    #     file: tasks/docker.yml
+    #     apply:
+    #       tags: [docker]

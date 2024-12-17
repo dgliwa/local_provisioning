@@ -1,0 +1,63 @@
+- name: Ensure ~/.ssh dir exists
+  ansible.builtin.shell:
+    cmd: "mkdir -p {{ansible_env.HOME}}/.ssh"
+
+- name: Check if ssh private key created
+  stat: path="{{ansible_env.HOME}}/.ssh/id_ed25519"
+  register: ssh_private_key
+
+- name: Check if ssh public key created
+  stat: path="{{ansible_env.HOME}}/.ssh/id_ed25519.pub"
+  register: ssh_public_key
+
+- name: Prompt for git token passcode
+  ansible.builtin.pause:
+    prompt: "Type a password for your git token:"
+    echo: false
+  register: passcode
+  when: ssh_private_key.stat.exists == false
+
+- name: Create ssh keys
+  community.crypto.openssh_keypair:
+    path: "{{ansible_env.HOME}}/.ssh/id_ed25519"
+    passphrase: "{{passcode.user_input}}"
+    type: "ed25519"
+  when: ssh_private_key.stat.exists == false
+
+- name: Copy ssh public key to github
+  ansible.builtin.shell:
+    cmd: "cat {{ansible_env.HOME}}/.ssh/id_ed25519.pub | pbcopy"
+  when: ssh_private_key.stat.exists == false
+
+- name: Create ssh key in github
+  ansible.builtin.pause:
+    prompt: "SSH public key has been copied to your clipboard. Create an ssh key in github and authorize it for SSO. Hit \"enter\" when done."
+    echo: false
+  when: ssh_private_key.stat.exists == false
+
+- name: Testing ssh connection to github
+  ansible.builtin.shell:
+    cmd: "ssh -i {{ansible_env.HOME}}/.ssh/id_ed25519 git@github.com 2>&1 | grep \"You've successfully authenticated\""
+    
+- name: Check if gitconfig created
+  stat: path="{{ansible_env.HOME}}/.gitconfig"
+  register: git_config
+
+- name: Prompt for git config user
+  ansible.builtin.pause:
+    prompt: "Type your github username:"
+    echo: false
+  register: github_name
+  when: git_config.stat.exists == false
+  
+- name: Prompt for git config email
+  ansible.builtin.pause:
+    prompt: "Type your github email:"
+    echo: false
+  register: github_email
+  when: git_config.stat.exists == false
+
+- name: write hostname using jinja2
+  ansible.builtin.template:
+    src: templates/gitconfig.j2
+    dest: "{{ansible_env.HOME}}/.gitconfig"

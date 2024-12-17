@@ -1,0 +1,17 @@
+- name: Check if asdf is installed
+  stat: path="{{ansible_env.HOME}}/.asdf"
+  register: asdf
+
+- name: Clone asdf
+  ansible.builtin.git:
+    repo: https://github.com/asdf-vm/asdf.git
+    dest: "{{ansible_env.HOME}}/.asdf"
+  when: asdf.stat.exists == false
+
+- name: Add asdf to path
+  ansible.builtin.lineinfile:
+    path: "{{ansible_env.HOME}}/.zshrc"
+    line: ". ~/.asdf/asdf.sh"
+    create: yes
+
+

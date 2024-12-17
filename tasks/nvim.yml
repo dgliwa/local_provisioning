@@ -1,0 +1,60 @@
+- name: Just get information about the repository whether or not it has already been cloned locally
+  ansible.builtin.git:
+    repo: 'https://github.com/dgliwa/local_nvim.git'
+    dest: "{{ansible_env.HOME}}/.config/nvim"
+    clone: no
+    update: no
+  register: cloned
+
+- name: Check if nvim cache present
+  stat: path="{{ansible_env.HOME}}/.cache/nvim"
+  register: nvim_cache
+  when: cloned.before == None
+
+- name: Check if nvim config present
+  stat: path="{{ansible_env.HOME}}/.config/nvim"
+  register: nvim_config
+  when: cloned.before == None
+
+- name: Check if nvim local share present
+  stat: path="{{ansible_env.HOME}}/.local/share/nvim"
+  register: nvim_local_share
+  when: cloned.before == None
+
+- name: Check if nvim local state present
+  stat: path="{{ansible_env.HOME}}/.local/state/nvim"
+  register: nvim_local_state
+  when: cloned.before == None
+
+- name: Backup nvim cache
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.cache/nvim {{ansible_env.HOME}}/.cache/nvim.bak"
+  when: cloned.before == None and nvim_cache.stat.exists
+
+- name: Backup nvim config
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.config/nvim {{ansible_env.HOME}}/.config/nvim.bak"
+  when: cloned.before == None and nvim_config.stat.exists
+
+- name: Backup nvim local share
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.local/share/nvim {{ansible_env.HOME}}/.local/share/nvim.bak"
+  when: cloned.before == None and nvim_local_share.stat.exists
+
+- name: Backup nvim local share
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.local/state/nvim {{ansible_env.HOME}}/.local/state/nvim.bak"
+  when: cloned.before == None and nvim_local_state.stat.exists
+
+- name: Clone repo if not exists
+  ansible.builtin.git:
+    repo: 'https://github.com/dgliwa/local_nvim.git'
+    dest: "{{ansible_env.HOME}}/.config/nvim"
+    update: no
+  when: cloned.before == None
+
+- name: Install nvim plugins
+  ansible.builtin.shell:
+    cmd: "nvim --headless +q"
+  when: cloned.before == None
+

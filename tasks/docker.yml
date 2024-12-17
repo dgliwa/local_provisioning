@@ -1,0 +1,25 @@
+- name: Check if docker is installed
+  stat: path="/Applications/Docker.app"
+  register: docker
+
+- name: Download Docker.dmg
+  ansible.builtin.get_url:
+    url: "https://desktop.docker.com/mac/main/arm64/Docker.dmg"
+    dest: "{{ansible_env.HOME}}/Downloads"
+  when: docker.stat.exists == false
+
+- name: Mount Docker.dmg
+  ansible.builtin.shell:
+    cmd: "sudo hdiutil attach ~/Downloads/Docker.dmg"
+  when: docker.stat.exists == false
+
+- name: Install Docker
+  ansible.builtin.shell:
+    cmd: "sudo /Volumes/Docker/Docker.app/Contents/MacOS/install"
+  when: docker.stat.exists == false
+
+- name: Unmount Docker.dmg
+  ansible.builtin.shell:
+    cmd: "sudo hdiutil detach /Volumes/Docker"
+  when: docker.stat.exists == false
+

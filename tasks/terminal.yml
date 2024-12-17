@@ -1,0 +1,45 @@
+- name: Check zshrc
+  stat: path="{{ansible_env.HOME}}/.zshrc"
+  register: zshrc
+  
+- name: Check colors
+  stat: path="{{ansible_env.HOME}}/.colors"
+  register: colors
+  
+- name: Check exports
+  stat: path="{{ansible_env.HOME}}/.exports"
+  register: exports
+
+- name: Backup zshrc
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.zshrc {{ansible_env.HOME}}/.zshrc.bak"
+  when: zshrc.stat.exists == True and (zshrc.stat.islnk == False or zshrc.stat.lnk_target != "{{playbook_dir}}/files/zshrc")
+  
+- name: Backup colors
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.colors {{ansible_env.HOME}}/.colors.bak"
+  when: colors.stat.exists == True and (colors.stat.islnk == False or colors.stat.lnk_target != "{{playbook_dir}}/files/colors")
+  
+- name: Backup exports
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.exports {{ansible_env.HOME}}/.exports.bak"
+  when: exports.stat.exists == True and (exports.stat.islnk == False or exports.stat.lnk_target != "{{playbook_dir}}/files/exports")
+  
+- name: Link to zshrc
+  ansible.builtin.file:
+    src: "{{playbook_dir}}/files/zshrc"
+    dest: "{{ansible_env.HOME}}/.zshrc"
+    state: link
+    
+- name: Link to colors
+  ansible.builtin.file:
+    src: "{{playbook_dir}}/files/colors"
+    dest: "{{ansible_env.HOME}}/.colors"
+    state: link
+  
+- name: link to exports
+  ansible.builtin.file:
+    src: "{{playbook_dir}}/files/exports"
+    dest: "{{ansible_env.HOME}}/.exports"
+    state: link
+
