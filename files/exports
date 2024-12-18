@@ -1,3 +1,4 @@
 export CLICOLOR=1
 export LSCOLORS="Exfxcxdxbxegedabagacad"
 # export PS1="\[$Green\]\$(vcprompt -f '[%b%u%m]')\[$Color_Off\][\w]🤙 "
+export CDPATH=".:$HOME/dev/"
