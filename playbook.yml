@@ -7,6 +7,7 @@
       - neovim
       - ripgrep
       - tree-sitter
+      - uv
       - vcprompt
     casks:
       - alfred
@@ -49,6 +50,11 @@
         file: tasks/terminal.yml
         apply:
           tags: [terminal]
+    - name: Link wezterm config
+      ansible.builtin.include_tasks:
+        file: tasks/wezterm.yml
+        apply:
+          tags: [wezterm]
     - name: Install docker
       ansible.builtin.include_tasks:
         file: tasks/docker.yml

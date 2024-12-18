@@ -1,0 +1,14 @@
+- name: Check wezterm config
+  stat: path="{{ansible_env.HOME}}/.wezterm.lua"
+  register: wezterm
+  
+- name: Backup wezterm config
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.wezterm.lua {{ansible_env.HOME}}/.wezterm.lua.bak"
+  when: wezterm.stat.exists == True and (wezterm.stat.islnk == False or wezterm.stat.lnk_target != "{{playbook_dir}}/files/wezterm.lua")
+  
+- name: Link to wezterm
+  ansible.builtin.file:
+    src: "{{playbook_dir}}/files/wezterm.lua"
+    dest: "{{ansible_env.HOME}}/.wezterm.lua"
+    state: link
