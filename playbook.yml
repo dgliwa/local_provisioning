@@ -9,6 +9,10 @@
       - tree-sitter
       - uv
       - vcprompt
+      # for compiling things like scipy
+      - gfortran
+      - openblas
+      - pkg-config
     casks:
       - alfred
       - arc
