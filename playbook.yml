@@ -3,6 +3,7 @@
 
   vars:
     brews:
+      - fd
       - git
       - neovim
       - ripgrep
