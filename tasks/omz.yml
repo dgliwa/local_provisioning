@@ -1,11 +1,11 @@
 - name: Install oh my zsh
   ansible.builtin.shell:
     cmd: /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  when: ansible_env.ZSH == None
+  when: "'ZSH' not in ansible_env"
 
 - name: Ensure homebrew on path
   ansible.builtin.command:
     cmd: echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zshrc
-  when: ansible_env.ZSH == None
+  when: "'ZSH' not in ansible_env"
 
 

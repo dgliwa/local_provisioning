@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # installing command line tools
-xcode-select --install
+# xcode-select --install
 
 # install homebrew
 if ! command -v brew
