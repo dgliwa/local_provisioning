@@ -1,5 +1,5 @@
 export CLICOLOR=1
 export LSCOLORS="Exfxcxdxbxegedabagacad"
 # export PS1="\[$Green\]\$(vcprompt -f '[%b%u%m]')\[$Color_Off\][\w]🤙 "
-export CDPATH=".:$HOME/dev/"
+export CDPATH=".:$HOME/dev/:$HOME"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/openblas/lib/pkgconfig"

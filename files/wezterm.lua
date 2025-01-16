@@ -8,6 +8,8 @@ local config = wezterm.config_builder()
 -- For example, changing the color scheme:
 config.color_scheme = 'BirdsOfParadise'
 
+config.force_reverse_video_cursor = true
+
 -- Setting the font
 config.font = wezterm.font 'JetBrains Mono'
 
