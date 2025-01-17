@@ -5,6 +5,7 @@
     brews:
       - fd
       - git
+      - lua
       - neovim
       - ripgrep
       - tree-sitter
