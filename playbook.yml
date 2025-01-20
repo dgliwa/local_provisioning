@@ -5,6 +5,7 @@
     brews:
       - fd
       - git
+      - lazygit
       - lua
       - neovim
       - ripgrep
@@ -20,6 +21,7 @@
       - alfred
       - arc
       - discord
+      - ghostty
       - obsidian
       - postman
       - rectangle
