@@ -16,6 +16,7 @@
       - gfortran
       - openblas
       - pkg-config
+      - tmux
       - withgraphite/tap/graphite
     casks:
       - alfred

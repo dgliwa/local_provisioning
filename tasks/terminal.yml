@@ -17,6 +17,10 @@
 - name: Check gitignore
   stat: path="{{ansible_env.HOME}}/.gitignore"
   register: gitignore
+  
+- name: Check tmuxconfig
+  stat: path="{{ansible_env.HOME}}/.tmux.conf"
+  register: tmuxconfig
 
 - name: Backup zshrc
   ansible.builtin.shell:
@@ -42,6 +46,11 @@
   ansible.builtin.shell:
     cmd: "mv {{ansible_env.HOME}}/.gitignore {{ansible_env.HOME}}/.gitignore.bak"
   when: gitignore.stat.exists == True and (gitignore.stat.islnk == False or gitignore.stat.lnk_target != "{{playbook_dir}}/files/gitignore")
+  
+- name: Backup tmuxconfig
+  ansible.builtin.shell:
+    cmd: "mv {{ansible_env.HOME}}/.tmux.conf {{ansible_env.HOME}}/.tmux.conf.bak"
+  when: tmuxconfig.stat.exists == True and (tmuxconfig.stat.islnk == False or tmuxconfig.stat.lnk_target != "{{playbook_dir}}/files/tmux.config")
   
 - name: Link to zshrc
   ansible.builtin.file:
@@ -71,4 +80,10 @@
   ansible.builtin.file:
     src: "{{playbook_dir}}/files/gitignore"
     dest: "{{ansible_env.HOME}}/.gitignore"
+    state: link
+    
+- name: Link to tmuxconfig
+  ansible.builtin.file:
+    src: "{{playbook_dir}}/files/tmux.conf"
+    dest: "{{ansible_env.HOME}}/.tmux.config"
     state: link
